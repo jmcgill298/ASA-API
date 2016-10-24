@@ -27,7 +27,7 @@ class ASAAAA:
             base_url: The base URL used by all API calls in the module.
         Example:
             >>>asa = input('What firewall would you like to use? ')
-            >>>What firewall would you like to use? 10.10.10.5
+            What firewall would you like to use? 10.10.10.5
             >>>asa_login = ASAAAA(asa)
             What is your username? username
             Enter your password: getpass is used to hide password input
