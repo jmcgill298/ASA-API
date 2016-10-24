@@ -64,7 +64,7 @@ class ASAACL:
         Example:
 
             >>>asa = input('What firewall would you like to use? ')
-            >>>What firewall would you like to use? 10.10.10.6
+            What firewall would you like to use? 10.10.10.6
             >>>asa_login = ASAAAA(asa)
             What is your username? username
             Enter your password: getpass is used to hide password input
