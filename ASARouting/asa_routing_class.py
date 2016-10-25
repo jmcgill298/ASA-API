@@ -51,8 +51,8 @@ class ASARouting:
 
     def asa_get_all_static_routes(self):
         '''
-        This method is used to obtain a list of static routes configured on the
-        given ASA formatted in json. This is similar to a 'show run route' on the CLI.
+        This method returns a GET request for obtaining static route
+        configurations. This is similar to a 'show run route' on the CLI.
 
         Returns:
             The request.get results for Routes configured on the given ASA.
