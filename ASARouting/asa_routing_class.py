@@ -59,8 +59,7 @@ class ASARouting:
             All desired printing should be done by a program handling UI input/output.
 
         Example:
-            Example:
-
+        
             >>>asa_routes = ASARouting(asa, header)
             >>>routes = asa_routes.asa_get_all_static_routes()
             >>>routes_json = json.loads(asa_routes.text)
