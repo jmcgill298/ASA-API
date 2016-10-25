@@ -21,7 +21,7 @@ def main():
         the code, reason, and content of the response.
     Example:
         (py3) C:\\asa_api_tests>python asa_configure_acl.py
-        What ASA would you like to modify? 100.116.42.98
+        What ASA would you like to modify? 10.10.10.5
         What is your username? username
         Enter your password: getpass is used to hide password input
         LOGIN STATUS_CODE: 204 OK
