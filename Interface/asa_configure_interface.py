@@ -1,5 +1,6 @@
 from asa_aaa_class import ASAAAA
 from asa_interface_class import ASAInterface
+from asa_interface_functions import unused_intfcs_hardware_id
 
 
 def main():
@@ -31,12 +32,13 @@ def main():
         POST INTERFACE CONFIG STATUS_CODE: 204 OK
 
     '''
-    config = config_variables()
-
-    login_cred = ASAAAA(asa=config['asa'])
+    asa = input('What ASA would you like to configure? ')
+    login_cred = ASAAAA(asa)
     header = login_cred.asa_login()
 
-    interface = ASAInterface(config["asa"], header=header)
+    config = config_variables(asa, header)
+
+    interface = ASAInterface(asa, header)
     config_interface = interface.asa_config_phys_interface(
         config['interface'], config['security_level'], config['name'],
         config['ip_address'], config['net_mask'], config['description']
@@ -49,18 +51,18 @@ def main():
             config_interface.status_code, config_interface.reason, config_interface.content))
 
 
-def config_variables():
+def config_variables(asa, header):
     '''
     This function is used to collect the desired interface's
-    configuration as a dictionaary.
+    configuration as a dictionary.
 
     Returns:
         A dictionary of desired configuration parameters and values.
 
     '''
     return {
-        "asa" : input('What ASA would you like to configure? '),
-        "interface": input('What interface would you like to configure? '),
+        "interface": input('What interface would you like to configure?\n{} '.format(
+            unused_intfcs_hardware_id(asa, header))),
         "security_level" : input('What is the secuirity level of the interface? '),
         "name" : input('What is the name of the interface? '),
         "ip_address" : input('What is the IP address of the interface? '),
