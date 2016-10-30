@@ -5,12 +5,13 @@ import requests
 class ASARouting:
     '''Methods for making Routing related API calls to a Cisco ASA.
 
-    The module initializes asa, base_url, and header used for all methods contained within.
+    The module initializes asa, header, and base_url used for all methods contained within.
     The methods are for interacting with Cisco ASAs using API calls instead of traditional
     CLI or ASDM. The methods will GET Routing related configurations, or make configuration
     changes using POST, PUT, and PATCH via the requests module.
 
     '''
+
     def __init__(self, asa, header=None, base_url=None):
         '''
         The __init__ method requires an ASA name or IP that can be used to make API calls.
@@ -42,12 +43,13 @@ class ASARouting:
 
         if header == None:
             self.header = ASAAAA().asa_login()
-        else: self.header = header
+        else:
+            self.header = header
 
         if base_url == None:
             self.base_url = "https://{}/api/routing/".format(asa)
-        else: self.base_url = base_url
-
+        else:
+            self.base_url = base_url
 
     def asa_get_all_static_routes(self):
         '''
@@ -59,7 +61,7 @@ class ASARouting:
             All desired printing should be done by a program handling UI input/output.
 
         Example:
-        
+
             >>>asa_routes = ASARouting(asa, header)
             >>>routes = asa_routes.asa_get_all_static_routes()
             >>>routes_json = json.loads(asa_routes.text)
@@ -94,7 +96,6 @@ class ASARouting:
         '''
         url = self.base_url + 'static'
         return requests.get(url, verify=False, headers=self.header)
-
 
     def asa_add_static_route(self, network, gateway, zone):
         '''
@@ -131,3 +132,4 @@ class ASARouting:
         }
 
         return requests.post(url, verify=False, headers=self.header, json=route_config)
+    
