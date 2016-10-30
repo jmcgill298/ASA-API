@@ -2,7 +2,7 @@ import json
 from asa_aaa_class import ASAAAA
 from asa_acl_class import ASAACL
 from asa_acl_functions import sort_acl
-from asa_interface_functions import collected_interfaces
+from asa_interface_functions import used_intfcs_name
 
 
 def main():
@@ -41,7 +41,7 @@ def main():
     header = login_cred.asa_login()
 
     intfc = input("What interface's would you like to view?\n{} ".format(
-        collected_interfaces(login_cred.asa, header)))
+        used_intfcs_name(login_cred.asa, header)))
     print()
     acl = ASAACL(login_cred.asa, header)
     policy = acl.asa_get_acl_access_in(intfc)
