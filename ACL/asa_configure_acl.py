@@ -1,7 +1,7 @@
 from asa_aaa_class import ASAAAA
 from asa_acl_class import ASAACL
 from asa_acl_functions import get_acl_last_position
-from asa_interface_functions import collected_interfaces
+from asa_interface_functions import used_intfcs_name
 
 
 def main():
@@ -52,7 +52,7 @@ def main():
     header = login_cred.asa_login()
 
     intfc = input("What interface's policy would you like to modify?\n {} ".format(
-        collected_interfaces(asa, header)))
+        used_intfcs_name(asa, header)))
     position = get_acl_last_position(asa, header, intfc)
 
     config = config_variables(intfc, position)
