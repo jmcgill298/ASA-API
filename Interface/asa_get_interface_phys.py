@@ -1,6 +1,7 @@
 import json
 from asa_aaa_class import ASAAAA
 from asa_interface_class import ASAInterface
+from asa_interface_functions import used_intfcs_hardware_id
 
 
 def main():
@@ -15,7 +16,7 @@ def main():
         The given interface's configuration on the given ASA.
 
     Example:
-        (py3) C:\\asa_api_tests>python asa_get_interface.py
+        (py3) C:\\asa_api_tests>python asa_get_interface_phys.py
         What ASA do you want to view? 10.10.10.5
         What is your username? username
         Enter your password: getpass is used to hide password input
@@ -39,7 +40,7 @@ def main():
     login_cred = ASAAAA(asa)
     header = login_cred.asa_login()
 
-    intfc = input('What interface would you like to view?\n{}: '.format(collected_hardware_id(asa, header)))
+    intfc = input('What interface would you like to view?\n{}: '.format(used_intfcs_hardware_id(asa, header)))
 
     asa_intfc = ASAInterface(asa, header)
     intfc_config = asa_intfc.asa_get_phys_interface(intfc)
@@ -52,29 +53,6 @@ def main():
     else:
         print("GET Interface FAILED!!! STATUS_CODE: {}\nReason: {}\nContent: {}".format(
             intfc_config.status_code, intfc_config.reason, intfc_config.content))
-
-
-def collected_hardware_id(asa, header):
-    '''
-    This function is used to get the currently used interfaces.
-
-    Args:
-        asa: The IP or hostname to be used to reach the desired ASA.
-        header: The header to use for providing the authentication token.
-
-    Returns:
-        A list of currently used interfaces.
-
-    '''
-    intfc_config = ASAInterface(asa, header)
-    intfcs = intfc_config.asa_get_phys_interfaces().text
-    intfcs_json = json.loads(intfcs)["items"]
-    used_intfcs = []
-    for intfc in intfcs_json:
-        if not intfc["shutdown"]:
-            used_intfcs.append(intfc["hardwareID"])
-
-    return used_intfcs
 
 
 def sort_intfc(config_json):
