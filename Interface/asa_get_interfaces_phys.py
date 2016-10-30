@@ -1,3 +1,4 @@
+import json
 from asa_aaa_class import ASAAAA
 from asa_interface_class import ASAInterface
 
@@ -14,7 +15,7 @@ def main():
         The given interface's configuration on the given ASA.
 
     Example:
-        (py3) C:\\asa_api_tests>python asa_get_phys_interfaces.py
+        (py3) C:\\asa_api_tests>python asa_get_interfaces_phys.py
         What ASA do you want to view? 10.10.10.5
         What is your username? username
         Enter your password: getpass is used to hide password input
