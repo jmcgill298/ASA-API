@@ -8,7 +8,7 @@ def main():
     '''
     The purpose of this program is to list out the configured static routes.
     The ASAAAA class is used to establish a session, and the ASARouting class
-    is,used to collect the Routing configuration. The other functions are used
+    is used to collect the Routing configuration. The other functions are used
     to handle formatting. This is similar to a 'show run route' from the CLI
     of a Cisco ASA.
 
@@ -75,3 +75,4 @@ def print_routes(routes):
 
 if __name__ == '__main__':
     main()
+    
