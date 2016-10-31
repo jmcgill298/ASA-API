@@ -70,4 +70,3 @@ def print_routes(routes):
 
 if __name__ == '__main__':
     main()
-    
