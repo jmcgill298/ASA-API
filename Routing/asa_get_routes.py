@@ -1,7 +1,7 @@
-import re
 import json
 from asa_aaa_class import ASAAAA
 from asa_routing_class import ASARouting
+from asa_routing_functions import sort_routes
 
 
 def main():
@@ -37,10 +37,11 @@ def main():
         GigabitEthernet0/2 in zone weblab
 
     '''
-    login_cred = ASAAAA(asa=input('What ASA do you want to view? '))
+    asa = input('What ASA do you want to configure? ')
+    login_cred = ASAAAA(asa)
     header = login_cred.asa_login()
 
-    routes = ASARouting(login_cred.asa, header=header)
+    routes = ASARouting(asa, header)
     configured_routes = routes.asa_get_all_static_routes()
 
     if configured_routes.ok:
@@ -52,9 +53,8 @@ def main():
 
 def print_routes(routes):
     '''
-    This function collects the relevant information, formats the routing
-    information, and then prints the data.
-
+    This function uses the sort_route function to sort the
+    relevant data, and then print out each route.
 
     Args:
         routes: a list of configured static routes
@@ -64,14 +64,9 @@ def print_routes(routes):
         reach this network, and what zone this network is in.
 
     '''
-    for route in routes:
-        (network, gateway, interface, zone) = (
-            route['network']['value'],route['gateway']['value'],
-            re.match('(?P<type>.*[0-9]).*(?P<int>[0-9]+)',route['interface']['objectId']),
-            route['interface']['name']
-        )
-        print('Network {} is reachable via {} over interface {}/{} in zone {}\n'.format(
-            network, gateway, interface.group('type'), interface.group('int'), zone))
+    for route in sort_routes(routes):
+        print('Network {} is reachable via {} over interface {} in zone {}'.format(
+            route.network, route.gateway, route.intfc, route.zone))
 
 if __name__ == '__main__':
     main()
