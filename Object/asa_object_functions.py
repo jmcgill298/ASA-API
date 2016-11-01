@@ -29,4 +29,29 @@ def determine_obj_key(obj):
         return "objectRef#NetworkObj"
     else:
         return "IPv4Address"
-    
+
+
+def make_name(kind, route, net):
+    '''
+    This function is used to make the name of a new object based
+    off the value of the object and standard naming conventions.
+
+    Args:
+        kind: The kind of object being created
+        route: The routing entry the firewall would use to forward
+        traffic for the given object.
+        net: The value of the network object being configured
+
+    Returns:
+        The name of the new object using standard naming convention.
+    '''
+    if kind == 'IPv4Address':
+        prefix = '-host-'
+    elif kind == 'IPv4Network':
+        prefix = '-network-'
+    else:
+        prefix = '-range-'
+
+    net = net.split('/')
+
+    return route.zone + prefix + net[0] + '_' + net[1]
