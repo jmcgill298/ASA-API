@@ -75,6 +75,26 @@ class ASAObject:
         return net_objects
 
     def asa_create_network_object(self, name, obj, desc):
+        '''
+        This method returns a POST request for configuring a network object on the
+        given ASA. This is similar to an 'object network name' from the CLI.
+
+        Args:
+            name: The name of the network object
+            obj: The IP, Range, or Subnet the object represents.
+            desc: A description of the object.
+
+        Returns:
+            The request.post results for creating the network object.
+
+        Example:
+
+            >>>asa_object = ASAObject(asa, header)
+            >>>net_object_config = asa_object.asa_create_network_object(name, obj, desc)
+            >>>print('STATUS_CODE: {}'.format(net_object_config.status_code))
+            STATUS_CODE: 201
+
+        '''
         url = self.base_url + 'objects/networkobjects'
         network_objects_config = {
             'name': name,
