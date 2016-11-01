@@ -110,6 +110,13 @@ class ASARouting:
             A 'request.post()' which sends the configuration. All desired http return data
             should be handled by the UI function.
 
+        Example:
+
+            >>>asa_route = ASARouting(asa, header)
+            >>>route_config = asa_route.asa_add_static_route(network, gateway, zone)
+            >>>print('STATUS_CODE: {}'.format(route_config.status_code))
+            STATUS_CODE: 201
+
         '''
         url = self.base_url + 'static'
         route_config = {
@@ -132,4 +139,3 @@ class ASARouting:
         }
 
         return requests.post(url, verify=False, headers=self.header, json=route_config)
-    
