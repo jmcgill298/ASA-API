@@ -55,3 +55,22 @@ def make_name(kind, route, net):
     net = net.split('/')
 
     return route.zone + prefix + net[0] + '_' + net[1]
+
+
+def get_object_ip(obj_inst, object):
+    '''
+    This function uses a given ASAObject instance and a network object
+    name and returns the IP value of the network.
+
+    Args:
+        obj_inst: An ASAObject
+        object: The name of a configured object
+
+    Returns:
+        The IP value associated with the object.
+
+    '''
+    net_obj = obj_inst.asa_get_network_object(object)
+    net_obj_json = json.loads(net_obj.text)
+
+    return net_obj_json['host']['value']
