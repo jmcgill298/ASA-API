@@ -57,8 +57,7 @@ def main():
 
     config = config_variables(intfc, position)
     acl = ASAACL(asa, header)
-    print(header)
-    print(acl.header)
+
     config_acl = acl.asa_configure_acl_access_in(intfc, config["source_kind"], config['source'],
                                                  config['destination_kind'], config['destination'],
                                                  config['service_kind'], config['service'], config['remark'],
