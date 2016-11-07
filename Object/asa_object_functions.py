@@ -1,3 +1,7 @@
+import json
+from asa_routing_functions import route_used
+
+
 def determine_obj_key(obj):
     '''
     The ASA API has different 'values' used to refer to the kind of object being referenced:
@@ -59,7 +63,7 @@ def make_name(kind, route, net):
 
 def get_object_ip(obj_inst, object):
     '''
-    This function uses a given ASAObject instance and a network object
+    This function takes a given ASAObject instance and a network object
     name and returns the IP value of the network.
 
     Args:
@@ -74,3 +78,31 @@ def get_object_ip(obj_inst, object):
     net_obj_json = json.loads(net_obj.text)
 
     return net_obj_json['host']['value']
+
+
+def object_group_intfc(obj_inst, obj_grp, routes):
+    '''
+    This function takes a given ASAObject instance, object group ID,
+    and routes from 'sort_routes' function and returns the interface
+    which the object group's objects are reachable from.
+
+    Args:
+        obj_inst: An ASAObject
+        obj_grp: The name of a configured object-group
+        routes: A list of routes from the sort_routes function
+
+    Returns:
+        The name of the interface which would be used to forward traffic
+        to the objects withing the object group.
+
+    '''
+    grp = obj_inst.asa_get_network_object_group(obj_grp).text
+    grp_json = json.loads(grp)
+
+    if 'objectRef#' in grp_json['members'][0]['kind']:
+        ex_obj = grp_json['members'][0]['objectId']
+        ex = get_object_ip(obj_inst, ex_obj)
+    else:
+        ex = grp_json['members'][0]['value']
+
+    return route_used(routes, ex).zone
